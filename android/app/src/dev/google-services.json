@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "66330529810",
+    "firebase_url": "https://b2b-jcom-dev.firebaseio.com",
+    "project_id": "b2b-jcom-dev",
+    "storage_bucket": "b2b-jcom-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66330529810:android:acc0e217ccad1e55ff48cb",
+        "android_client_info": {
+          "package_name": "br.com.mobau.b2b.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66330529810-8v4hfoo5el8lla7rbgaa4hg35mues61u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.mobau.b2b.dev",
+            "certificate_hash": "ae1b61239c3b2cf98bdc0737689bbbf691479ad9"
+          }
+        },
+        {
+          "client_id": "66330529810-ecvvmagqtje36o84v5gbahcvt855sim7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjJcFP9pSUt5PSPtEWZB8k9WyTUS1hgeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66330529810-ecvvmagqtje36o84v5gbahcvt855sim7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
