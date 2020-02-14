@@ -1,35 +1,48 @@
-import 'dart:io' as platform;
+import 'dart:async';
 
 import 'file:///C:/Users/Igor/source/B2B/lib/config/application-config.dart';
 import 'package:b2b/blocs/login.bloc.dart';
+import 'package:b2b/config/shared-preferences.config.dart';
 import 'package:b2b/repository/base.repository.dart';
 import 'package:b2b/ui/android/pages/login.page.dart';
 import 'package:b2b/ui/android/pages/main.page.dart';
 import 'package:b2b/ui/notifiers/login-page.notifier.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
-  var now = new DateTime.now();
-  var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
-  String formatted = formatter.format(now);
+  var loginBloc = LoginBloc();
 
-  String app = "jcom";
-  Firestore.instance.collection("info").document("1").setData({
-    "Platform": platform.Platform.operatingSystem,
-    "Pack": app,
-    "Time": formatted
+  runApp(MyApp(loginBloc));
+  /*
+  bool executou = false;
+  String uid =  null;
+
+  SharedPreferences.getInstance().then((prefs){
+     uid = prefs.getString(SharedPreferencesNames.uIdUser);
+     executou = true;
   });
+
+  Timer.periodic(const Duration(seconds: 2), (a) {
+    print(executou);
+    if(executou) {
+      a.cancel();
+      runApp(MyApp(loginBloc,(uid==null||uid=="")));
+    }
+  });*/
+
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
+  bool login = true;
+
+  MyApp(this.loginBloc);
+
   var config = AplicationConfig.Dev();
-  var loginBloc = LoginBloc();
+  var loginBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +59,10 @@ class MyApp extends StatelessWidget {
   }
 
   _render(){
-
     return MaterialApp(
       title: config.nome,
       theme: config.theme,
-      home: loginBloc.fbUser == null? LoginPage():MainPage(),
+      home: login? LoginPage():MainPage(),
     );
   }
 }
