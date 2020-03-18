@@ -1,15 +1,12 @@
-import 'dart:async';
-
-import 'file:///C:/Users/Igor/source/B2B/lib/config/application-config.dart';
 import 'package:b2b/blocs/login.bloc.dart';
-import 'package:b2b/config/shared-preferences.config.dart';
 import 'package:b2b/repository/base.repository.dart';
 import 'package:b2b/ui/android/pages/login.page.dart';
 import 'package:b2b/ui/android/pages/main.page.dart';
 import 'package:b2b/ui/notifiers/login-page.notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'config/application-config.dart';
 
 void main() {
   var loginBloc = LoginBloc();
@@ -31,7 +28,6 @@ void main() {
       runApp(MyApp(loginBloc,(uid==null||uid=="")));
     }
   });*/
-
 }
 
 class MyApp extends StatelessWidget {
@@ -46,23 +42,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
-        Provider<Base>.value(value: Base())
-       ,Provider<AplicationConfig>.value(value: config)
-       ,ChangeNotifierProvider<LoginPageUINotifier>.value(value: LoginPageUINotifier())
-       ,ChangeNotifierProvider<LoginBloc>.value(value: loginBloc)
+        Provider<Base>.value(value: Base()),
+        Provider<AplicationConfig>.value(value: config),
+        ChangeNotifierProvider<LoginPageUINotifier>.value(
+            value: LoginPageUINotifier()),
+        ChangeNotifierProvider<LoginBloc>.value(value: loginBloc)
       ],
       child: _render(),
     );
   }
 
-  _render(){
+  _render() {
     return MaterialApp(
       title: config.nome,
       theme: config.theme,
-      home: login? LoginPage():MainPage(),
+      home: login ? LoginPage() : MainPage(),
     );
   }
 }

@@ -1,5 +1,5 @@
-import 'file:///C:/Users/Igor/source/B2B/lib/config/application-config.dart';
 import 'package:b2b/blocs/login.bloc.dart';
+import 'package:b2b/config/application-config.dart';
 import 'package:b2b/ui/notifiers/login-page.notifier.dart';
 import 'package:b2b/ui/widgets/buttons.dart';
 import 'package:b2b/ui/widgets/generic-progress.widget.dart';
@@ -17,10 +17,9 @@ class LoginPage extends StatelessWidget {
     _notifier = Provider.of<LoginPageUINotifier>(context);
 
     return Scaffold(
-      body: Center(
-        child: _render(context),
-      )
-    );
+        body: Center(
+      child: _render(context),
+    ));
   }
 
   Widget _render(context) {
@@ -46,18 +45,21 @@ class LoginPage extends StatelessWidget {
             ),
             WidgetTextFormField(
               _config.appStrings.pageLoginEmail,
-              leftIcon: IconButton(icon: Icon(Icons.email),onPressed: (){}),
+              leftIcon: IconButton(icon: Icon(Icons.email), onPressed: () {}),
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
-              onFieldSubmited: (term){
-               FocusScope.of(context).nextFocus();
+              onFieldSubmited: (term) {
+                FocusScope.of(context).nextFocus();
               },
             ),
             SizedBox(
               height: 10,
             ),
             WidgetTextFormField(_config.appStrings.pageLoginSenha,
-                leftIcon: IconButton(icon: Icon(Icons.vpn_key),onPressed: (){},),
+                leftIcon: IconButton(
+                  icon: Icon(Icons.vpn_key),
+                  onPressed: () {},
+                ),
                 textInputAction: TextInputAction.done,
                 rightIcon: IconButton(
                   icon: Icon(_notifier.exibirSenha
@@ -66,7 +68,8 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     _notifier.exibirSenha = !_notifier.exibirSenha;
                   },
-                ),obscureText: _notifier.exibirSenha ? false:true),
+                ),
+                obscureText: _notifier.exibirSenha ? false : true),
             SizedBox(
               height: 10,
             ),
@@ -74,45 +77,42 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-
             SizedBox(
               height: 20,
             ),
-            _renderBtnSigin(loginBloc)
-            ,
+            _renderBtnSigin(loginBloc),
           ],
         )),
       ),
     );
   }
 
-  Widget _renderBtnLogin(LoginBloc loginBloc){
-    return loginBloc.processando ?
-           GenericProgress()
-        :
-    Container(
-      width: double.infinity,
-      child: WidgetRaisedButton(
-        child: Text(_config.appStrings.pageLoginBtnLogin),
-        onPressed: () { loginBloc.loginEmailSenha("asc@jcomm.com.br", "123456");},
-      ),
-    );
+  Widget _renderBtnLogin(LoginBloc loginBloc) {
+    return loginBloc.processando
+        ? GenericProgress()
+        : Container(
+            width: double.infinity,
+            child: WidgetRaisedButton(
+              child: Text(_config.appStrings.pageLoginBtnLogin),
+              onPressed: () {
+                loginBloc.loginEmailSenha("asc@jcomm.com.br", "123456");
+              },
+            ),
+          );
   }
 
-  Widget _renderBtnSigin(LoginBloc loginBloc){
-    return loginBloc.processando ?
-    GenericProgress()
-        :
-    WidgetFlatButton(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Icon(Icons.arrow_forward),Text(_config.appStrings.pageLoginSigIn)],
-      ),
-      onPressed: (){
-
-      },
-    )
-    ;
+  Widget _renderBtnSigin(LoginBloc loginBloc) {
+    return loginBloc.processando
+        ? GenericProgress()
+        : WidgetFlatButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.arrow_forward),
+                Text(_config.appStrings.pageLoginSigIn)
+              ],
+            ),
+            onPressed: () {},
+          );
   }
-
 }
