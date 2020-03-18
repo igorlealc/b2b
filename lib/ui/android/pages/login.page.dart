@@ -1,6 +1,5 @@
 import 'file:///C:/Users/Igor/source/B2B/lib/config/application-config.dart';
 import 'package:b2b/blocs/login.bloc.dart';
-import 'package:b2b/ui/android/pages/main.page.dart';
 import 'package:b2b/ui/notifiers/login-page.notifier.dart';
 import 'package:b2b/ui/widgets/buttons.dart';
 import 'package:b2b/ui/widgets/generic-progress.widget.dart';
@@ -8,27 +7,25 @@ import 'package:b2b/ui/widgets/text-fields.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+final _formKey = GlobalKey<FormState>();
+final _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class LoginPage extends StatelessWidget {
   AplicationConfig _config;
   LoginPageUINotifier _notifier;
   LoginBloc _loginBloc;
-  TextEditingController _controllerEmail;
-  TextEditingController _controllerSenha;
 
   @override
   Widget build(BuildContext context) {
-    _controllerEmail = TextEditingController();
-    _controllerSenha = TextEditingController();
-
-    _controllerEmail.addListener(validarEmail);
-    _controllerSenha.addListener(validarSenha);
 
     _config = Provider.of<AplicationConfig>(context);
     _notifier = Provider.of<LoginPageUINotifier>(context);
     _loginBloc = Provider.of<LoginBloc>(context);
+
     return Scaffold(
+       key: _scaffoldKey,
         body: Center(
-        child: _render(context),
+      child: _render(context),
     ));
   }
 
@@ -36,7 +33,9 @@ class LoginPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(30),
-        child:  Column(
+        child: Form(
+          key: _formKey,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -57,7 +56,6 @@ class LoginPage extends StatelessWidget {
                       IconButton(icon: Icon(Icons.email), onPressed: () {}),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.emailAddress,
-                  controller: _controllerEmail,
                   onChanged: (text) {
                     _loginBloc.validarEmail(text);
                   },
@@ -74,7 +72,6 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {},
                     ),
                     textInputAction: TextInputAction.done,
-                    controller: _controllerSenha,
                     onChanged: (text) {
                       _loginBloc.validarSenha(text);
                     },
@@ -101,7 +98,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 _renderBtnUp(_loginBloc),
               ],
-            ),
+            )),
       ),
     );
   }
@@ -115,12 +112,9 @@ class LoginPage extends StatelessWidget {
               child: Text(_config.appStrings.pageLoginBtnLogin),
               onPressed: loginBloc.emailValido && loginBloc.senhaValida
                   ? () {
-
-
-                      loginBloc.loginEmailSenha(
-                          _controllerEmail.text, _controllerSenha.text);
-                    } : null
-
+                      loginBloc.loginEmailSenha();
+                    }
+                  : null,
             ),
           );
   }
@@ -139,13 +133,4 @@ class LoginPage extends StatelessWidget {
             onPressed: () {},
           );
   }
-
-  validarEmail(){
-
-  }
-
-  validarSenha(){
-
-  }
-
 }

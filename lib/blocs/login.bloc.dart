@@ -12,14 +12,17 @@ class LoginBloc extends ChangeNotifier{
   bool senhaValida = false;
   String repostaNaoAutenticado = "";
   FirebaseUser fbUser = null;
+  String _email = "";
+  String _senha = "";
 
-  loginEmailSenha(String email,String senha) async {
+  loginEmailSenha() async {
     try {
       processandoLogin = true;
       notifyListeners();
-      var a = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: senha);
+      var a = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _senha);
       fbUser = a.user;
       processandoLogin = false;
+      print(a.user.email);
       //var prefs = await SharedPreferences.getInstance();
       //await prefs.setString(SharedPreferencesNames.uIdUser, fbUser.uid);
       notifyListeners();
@@ -46,12 +49,7 @@ class LoginBloc extends ChangeNotifier{
   {
     processandoVerificacaoUsuarioLogado = true;
     notifyListeners();
-    this.fbUser = await FirebaseAuth.instance.currentUser();//.then((user) {
-      //this.fbUser = user;
-      //this.processandoVerificacaoUsuarioLogado = false;
-      //notifyListeners();
-    //});
-
+    this.fbUser = await FirebaseAuth.instance.currentUser();
     this.processandoVerificacaoUsuarioLogado = false;
     notifyListeners();
 
@@ -59,11 +57,13 @@ class LoginBloc extends ChangeNotifier{
 
   validarEmail(String email){
     emailValido = EmailValidator.validate(email);
+    this._email = emailValido ? email : "";
     notifyListeners();
   }
 
   validarSenha(String senha){
     senhaValida = senha.length > 5;
+    this._senha = senhaValida ? senha : "";
     notifyListeners();
   }
 }
