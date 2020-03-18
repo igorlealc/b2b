@@ -10,6 +10,9 @@ class WidgetTextFormField extends StatelessWidget {
   TextInputType _keyboardType;
   Function _onFieldSubmitted;
   FocusNode _focusNode;
+  Function _changed;
+  TextEditingController _controller;
+  Function _validator;
 
   WidgetTextFormField(this._label,
       {IconButton leftIcon,
@@ -18,7 +21,10 @@ class WidgetTextFormField extends StatelessWidget {
       TextInputAction textInputAction,
       TextInputType keyboardType,
       Function onFieldSubmited,
-      FocusNode focusNode
+      FocusNode focusNode,
+      Function onChanged,
+      TextEditingController controller,
+      Function validator
       }) {
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
@@ -27,7 +33,9 @@ class WidgetTextFormField extends StatelessWidget {
     this._keyboardType = keyboardType;
     this._onFieldSubmitted = onFieldSubmited;
     this._focusNode = focusNode;
-
+    this._changed = onChanged;
+    this._controller = controller;
+    this._validator = validator;
   }
 
   @override
@@ -38,6 +46,9 @@ class WidgetTextFormField extends StatelessWidget {
         textInputAction: this._textInputAction,
         onFieldSubmitted: this._onFieldSubmitted,
         focusNode: this._focusNode,
+        onChanged: this._changed,
+        validator: this._validator,
+        controller: this._controller,
         style: TextStyle(
             color: Theme.of(context).iconTheme.color,
           fontSize: Theme.of(context).textTheme.display1.fontSize
@@ -59,6 +70,8 @@ class  WidgetTextField extends StatelessWidget {
   TextInputAction _textInputAction;
   TextInputType _keyboardType;
   FocusNode _focusNode;
+  Function _changed;
+  TextEditingController _controller;
 
   WidgetTextField(this._label,
       {IconButton leftIcon,
@@ -67,7 +80,9 @@ class  WidgetTextField extends StatelessWidget {
         TextInputAction textInputAction,
         TextInputType keyboardType,
         Function onFieldSubmited,
-        FocusNode focusNode
+        FocusNode focusNode,
+        Function onChanged,
+        TextEditingController controller
       }) {
     this._leftIcon = leftIcon;
     this._rightIcon = rightIcon;
@@ -75,6 +90,9 @@ class  WidgetTextField extends StatelessWidget {
     this._textInputAction = textInputAction;
     this._keyboardType = keyboardType;
     this._focusNode = focusNode;
+    this._changed = onChanged;
+    this._controller = controller;
+
 
   }
 
@@ -85,6 +103,8 @@ class  WidgetTextField extends StatelessWidget {
         keyboardType: this._keyboardType,
         textInputAction: this._textInputAction,
         focusNode: this._focusNode,
+        onChanged: _changed,
+        controller: _controller,
         style: TextStyle(
             color: Theme.of(context).textTheme.display1.color,
             fontSize: Theme.of(context).textTheme.display1.fontSize
@@ -95,8 +115,6 @@ class  WidgetTextField extends StatelessWidget {
           labelText: this._label,
           prefixIcon: _leftIcon,
           suffixIcon: _rightIcon,
-
-
         ));
   }
 }
