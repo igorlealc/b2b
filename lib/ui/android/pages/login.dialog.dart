@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 final _formKey = GlobalKey<FormState>();
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-class LoginPage extends StatelessWidget {
+class LoginDialog extends StatelessWidget {
   AplicationConfig _config;
   LoginPageUINotifier _notifier;
   LoginBloc _loginBloc;
@@ -21,11 +21,19 @@ class LoginPage extends StatelessWidget {
     _notifier = Provider.of<LoginPageUINotifier>(context);
     _loginBloc = Provider.of<LoginBloc>(context);
 
-    return Scaffold(
-        key: _scaffoldKey,
-        body: Center(
-          child: _render(context),
-        ));
+    return AlertDialog(
+      title: Text(""),
+      content: _render(context),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Regret'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    _render(context);
   }
 
   Widget _render(context) {
@@ -52,7 +60,7 @@ class LoginPage extends StatelessWidget {
                 WidgetTextField(
                   _config.appStrings.pageLoginEmail,
                   leftIcon:
-                  IconButton(icon: Icon(Icons.email), onPressed: () {}),
+                      IconButton(icon: Icon(Icons.email), onPressed: () {}),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (text) {
@@ -71,8 +79,8 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {},
                     ),
                     textInputAction: TextInputAction.done, onChanged: (text) {
-                      _loginBloc.validarSenha(text);
-                    },
+                  _loginBloc.validarSenha(text);
+                },
                     rightIcon: IconButton(
                       icon: Icon(_notifier.exibirSenha
                           ? Icons.visibility
@@ -103,30 +111,30 @@ class LoginPage extends StatelessWidget {
     return loginBloc.processandoLogin
         ? GenericProgress()
         : Container(
-      width: double.infinity,
-      child: WidgetRaisedButton(
-        child: Text(_config.appStrings.pageLoginBtnLogin),
-        onPressed: loginBloc.emailValido && loginBloc.senhaValida
-            ? () {
-          loginBloc.loginEmailSenha();
-        }
-            : null,
-      ),
-    );
+            width: double.infinity,
+            child: WidgetRaisedButton(
+              child: Text(_config.appStrings.pageLoginBtnLogin),
+              onPressed: loginBloc.emailValido && loginBloc.senhaValida
+                  ? () {
+                      loginBloc.loginEmailSenha();
+                    }
+                  : null,
+            ),
+          );
   }
 
   Widget _renderBtnUp(LoginBloc loginBloc) {
     return loginBloc.processandoLogin
         ? Container()
         : WidgetFlatButton(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.arrow_forward),
-          Text(_config.appStrings.pageLoginSigIn)
-        ],
-      ),
-      onPressed: () {},
-    );
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.arrow_forward),
+                Text(_config.appStrings.pageLoginSigIn)
+              ],
+            ),
+            onPressed: () {},
+          );
   }
 }
