@@ -1,16 +1,12 @@
-import 'dart:async';
-
-import 'file:///C:/Users/Igor/source/B2B/lib/config/application-config.dart';
 import 'package:b2b/blocs/login.bloc.dart';
-import 'package:b2b/config/shared-preferences.config.dart';
 import 'package:b2b/repository/base.repository.dart';
-import 'package:b2b/ui/android/pages/login.page.dart';
 import 'package:b2b/ui/android/pages/main.page.dart';
 import 'package:b2b/ui/notifiers/login-page.notifier.dart';
 import 'package:b2b/ui/widgets/generic-progress.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'config/application-config.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,10 +50,11 @@ class MyApp extends StatelessWidget {
   }
 
   _render() {
+    print("MainPage - 1");
     return MaterialApp(
       title: config.nome,
       theme: config.theme,
-      home: HomePage(),
+      home: MainPage(),
     );
   }
 }
@@ -68,6 +65,6 @@ class HomePage extends StatelessWidget {
     var bloc = Provider.of<LoginBloc>(context);
     return bloc.processandoVerificacaoUsuarioLogado
         ? Center(child: GenericProgress())
-        : bloc.fbUser == null ? LoginPage() : MainPage();
+        : MainPage();
   }
 }

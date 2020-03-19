@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 final _formKey = GlobalKey<FormState>();
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-class LoginPage extends StatelessWidget {
+class LoginDialog extends StatelessWidget {
   AplicationConfig _config;
   LoginPageUINotifier _notifier;
   LoginBloc _loginBloc;
@@ -21,11 +21,19 @@ class LoginPage extends StatelessWidget {
     _notifier = Provider.of<LoginPageUINotifier>(context);
     _loginBloc = Provider.of<LoginBloc>(context);
 
-    return Scaffold(
-        key: _scaffoldKey,
-        body: Center(
-          child: _render(context),
-        ));
+    return AlertDialog(
+      title: Text(""),
+      content: _render(context),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Regret'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    _render(context);
   }
 
   Widget _render(context) {

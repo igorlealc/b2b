@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import 'login.dialog.dart';
+
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,8 +12,14 @@ class MainPage extends StatelessWidget {
     return Container(
       color: Colors.deepOrangeAccent,
       child: Center(
-        child: FlatButton(child: Text("Sair"),
-                onPressed: (){bloc.logout();},),
+        child: FlatButton(
+          child: Text(bloc.fbUser == null ? "Login" : "Sair"),
+          onPressed: () {
+            bloc.fbUser == null
+                ? showDialog(context: context, child: LoginDialog())
+                : bloc.logout();
+          },
+        ),
       ),
     );
   }
