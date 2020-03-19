@@ -24,8 +24,8 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
        key: _scaffoldKey,
-        body: Center(
-      child: _render(context),
+       body: Center(
+       child: _render(context),
     ));
   }
 
