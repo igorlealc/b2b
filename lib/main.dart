@@ -17,6 +17,7 @@ void main() {
   SharedPreferences.getInstance().then((prefs){
      uid = prefs.getString(SharedPreferencesNames.uIdUser);
      executou = true;
+
   });
 
   Timer.periodic(const Duration(seconds: 2), (a) {
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
       title: config.nome,
       theme: config.theme,
       home: MainPage(),
+
     );
   }
 }

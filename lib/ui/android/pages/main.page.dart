@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
           child: Text(bloc.fbUser == null ? "Login" : "Sair"),
           onPressed: () {
             bloc.fbUser == null
-                ? showDialog(context: context, child: LoginDialog())
+                ? showDialog(context: context, child: LoginDialog(), barrierDismissible: false )
                 : bloc.logout();
           },
         ),

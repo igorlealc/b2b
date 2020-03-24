@@ -12,14 +12,14 @@ class LoginBloc extends ChangeNotifier{
   bool senhaValida = false;
   String repostaNaoAutenticado = "";
   FirebaseUser fbUser = null;
-  String _email = "";
-  String _senha = "";
+  String email = "";
+  String senha = "";
 
   loginEmailSenha() async {
     try {
       processandoLogin = true;
       notifyListeners();
-      var a = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _senha);
+      var a = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: senha);
       fbUser = a.user;
       processandoLogin = false;
       print(a.user.email);
@@ -57,13 +57,13 @@ class LoginBloc extends ChangeNotifier{
 
   validarEmail(String email){
     emailValido = EmailValidator.validate(email);
-    this._email = emailValido ? email : "";
+    this.email = emailValido ? email : "";
     notifyListeners();
   }
 
   validarSenha(String senha){
     senhaValida = senha.length > 5;
-    this._senha = senhaValida ? senha : "";
+    this.senha = senhaValida ? senha : "";
     notifyListeners();
   }
 }
